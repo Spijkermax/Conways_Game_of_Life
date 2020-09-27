@@ -22,16 +22,17 @@ public class EntryPoint extends Application {
 		BorderPane rootpane = new BorderPane();
 
 		/** Make a button pane at the bottom */
-		HBox buttonpanel = new HBox(8); //HBox to set buttons horizontally
-		Button run = new Button("Run"); 
+		VBox buttonpanel = new VBox(8); //HBox to set buttons horizontally
+		Button run = new Button("Start"); 
 		Button stop = new Button("Stop");
 		buttonpanel.getChildren().addAll(run, stop);
-		rootpane.setBottom(buttonpanel);
+		rootpane.setLeft(buttonpanel);
 		buttonpanel.setAlignment(Pos.TOP_CENTER);
 		
 		/** title at the top */
 		HBox toppanel = new HBox(8);
 		Text gametitle = new Text("Conways Game of Life");
+		gametitle.setId("gametitle");
 		toppanel.getChildren().add(gametitle);
 		rootpane.setTop(toppanel);
 		toppanel.setAlignment(Pos.CENTER);
@@ -40,6 +41,16 @@ public class EntryPoint extends Application {
 		Pane gamepane = new Pane();
 		gamepane.setStyle("-fx-background-color: black"); //Just to see where the grid is before we implement grid
 		rootpane.setCenter(gamepane);
+		
+		/** Descriptive box at the bottom (could add game descriptions, cell counter (how many are alive) */
+		HBox bottompanel = new HBox();
+		Text sampletext = new Text("We will use this for descriptions");
+		bottompanel.getChildren().add(sampletext);
+		bottompanel.setStyle("-fx-background-color: red");
+		rootpane.setBottom(bottompanel);
+			
+		/** Styling everything with a css file */
+		rootpane.getStylesheets().add("styling.css");
 		
 		Scene scene = new Scene(rootpane, width, height);
 		primaryStage.setScene(scene);
