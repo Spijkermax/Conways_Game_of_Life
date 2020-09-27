@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,7 +18,7 @@ public class EntryPoint extends Application {
 
 	public void start(Stage primaryStage) throws Exception {
 		
-		/** Main BorderPane */
+		/** Main pane layout (BorderPane) */
 		BorderPane rootpane = new BorderPane();
 
 		/** Make a button pane at the bottom */
@@ -33,8 +35,13 @@ public class EntryPoint extends Application {
 		toppanel.getChildren().add(gametitle);
 		rootpane.setTop(toppanel);
 		toppanel.setAlignment(Pos.CENTER);
-
-		Scene scene = new Scene(rootpane, width, height + 30);
+		
+		/** Pane for the game to go into */
+		Pane gamepane = new Pane();
+		gamepane.setStyle("-fx-background-color: black"); //Just to see where the grid is before we implement grid
+		rootpane.setCenter(gamepane);
+		
+		Scene scene = new Scene(rootpane, width, height);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
