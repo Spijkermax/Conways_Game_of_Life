@@ -96,8 +96,14 @@ public class CellWorld {
 	}
 	
 	public void addTop() {
-		Cell[][] updatedWorld = new Cell[world.length+1][world[0].length];
-		
-		
-	}
+        Cell[][] updatedWorld = new Cell[world.length + 1][world[0].length];
+
+ 
+
+        for (int j = 0; j < world.length; j++) {
+            for (int i = 0; i < world[j].length; i++) {
+                updatedWorld[j+1][i] = world[j][i];
+            }
+        }
+    }
 }
