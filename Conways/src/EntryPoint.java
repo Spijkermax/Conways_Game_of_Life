@@ -27,7 +27,7 @@ public class EntryPoint extends Application {
 	CellWorld cellWorld1 = new CellWorld(20, 10);
 	Cell[][] world = cellWorld1.getWorld();
 	Group group = new Group();
-	
+
 	public void start(Stage primaryStage) throws Exception {
 
 		/** Main pane layout (BorderPane) */
@@ -35,9 +35,9 @@ public class EntryPoint extends Application {
 
 		/** Make a button pane at the bottom */
 		VBox buttonpanel = new VBox(8); // HBox to set buttons horizontally
-		Button run = new Button("Start");
+		Button start = new Button("Start");
 		Button stop = new Button("Stop");
-		buttonpanel.getChildren().addAll(run, stop);
+		buttonpanel.getChildren().addAll(start, stop);
 		rootpane.setLeft(buttonpanel);
 		buttonpanel.setAlignment(Pos.TOP_CENTER);
 
@@ -51,7 +51,7 @@ public class EntryPoint extends Application {
 
 		/** Pane for the game to go into */
 		GridPane gamepane = new GridPane();
-	
+
 		gamepane.setStyle("-fx-background-color: black"); // Just to see where the grid is before we implement grid
 		rootpane.setCenter(gamepane);
 
@@ -68,7 +68,7 @@ public class EntryPoint extends Application {
 		/** Styling everything with a css file */
 		rootpane.getStylesheets().add("styling.css");
 		drawSquares();
-		
+
 		KeyFrame frame = new KeyFrame(Duration.millis(200), new EventHandler<ActionEvent>() {
 
 			@Override
@@ -76,58 +76,55 @@ public class EntryPoint extends Application {
 				// TODO Auto-generated method stub
 				drawSquares();
 			}
-			
+
 		});
-		
+
 		Timeline t = new Timeline(frame);
 		t.setCycleCount(javafx.animation.Animation.INDEFINITE);
-		t.play();
 		rootpane.setCenter(group);
 		Scene scene = new Scene(rootpane, width, height);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
-		run.setOnAction(new EventHandler<ActionEvent>() {
+		/** Start button */
+		start.setOnAction(e -> {
+			t.play();
 
-			@Override
-			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-				cellWorld1.tick();
-			}
-			
+		});
+		/** Stop button */
+		stop.setOnAction(e -> {
+			t.stop();
+
 		});
 	}
 
-
-	
 	public static void main(String[] args) {
 		launch(args);
 
 	}
+
 	public void drawSquares() {
 		group.getChildren().clear();
 		cellWorld1.tick();
 		world = cellWorld1.getWorld();
-		int rH = height/world.length;
-		for(int j =0; j<world.length; j++) {
-			int rW = width/world[j].length;
-			for(int i =0; i < world[j].length; i++) {
-			Rectangle r = new Rectangle();
-			r.setWidth(rW);
-			r.setHeight(rH);
-			r.setTranslateX(world[j][i].getX()*rW+5);
-			r.setTranslateY(world[j][i].getY()*rH+5);
-			if(world[j][i].isAlive()) {
-				r.setFill(javafx.scene.paint.Color.PINK);
-			}
-				else{
-					r.setFill(javafx.scene.paint.Color.PURPLE);
+		int rH = height / world.length;
+		for (int j = 0; j < world.length; j++) {
+			int rW = width / world[j].length;
+			for (int i = 0; i < world[j].length; i++) {
+				Rectangle r = new Rectangle();
+				r.setWidth(rW);
+				r.setHeight(rH);
+				r.setTranslateX(world[j][i].getX() * rW + 5);
+				r.setTranslateY(world[j][i].getY() * rH + 5);
+				if (world[j][i].isAlive()) {
+					r.setFill(javafx.scene.paint.Color.BLACK);
+				} else {
+					r.setFill(javafx.scene.paint.Color.GREY);
+
 				}
-			group.getChildren().add(r);
+				group.getChildren().add(r);
 			}
-			
 		}
-	
-		}
+
+	}
 }
