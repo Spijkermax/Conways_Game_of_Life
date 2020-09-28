@@ -8,6 +8,10 @@ public class CellWorld {
 		createWorld();
 		drawWorld();
 	}
+	
+	public Cell[][] getWorld() {
+		return world;
+	}
 
 	public void swapState(int x, int y) {
 		world[y][x].swapState();
