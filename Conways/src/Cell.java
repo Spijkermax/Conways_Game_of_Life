@@ -1,12 +1,15 @@
 import java.util.ArrayList;
 
 public class Cell {
+
+	/** Declarations */
 	int x;
 	int y;
 	boolean alive;
 	String symbol;
 	private boolean shouldSwap;
 
+/** Constructors */
 	public Cell(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -15,7 +18,7 @@ public class Cell {
 
 		
 	}
-
+/** Getters and setters */
 	public void setX(int x) {
 		this.x = x;
 	}
@@ -36,8 +39,13 @@ public class Cell {
 		return alive;
 
 	}
+	public String getSymbol() {
+		return symbol;
+	}
 
-	
+	/** Methods */
+
+	//Swap a dead cell to an alive cell or swap an alive cell to a dead cell by switching boolean alive from true to false
 	public void swapState() {
 		alive = !alive;
 		if (symbol.equals(" ")) {
@@ -45,10 +53,6 @@ public class Cell {
 		} else if (symbol.equals("O")) {
 			symbol = " ";
 		}
-	}
-
-	public String getSymbol() {
-		return symbol;
 	}
 
 	// return the number of living cells surrounding this cell
