@@ -43,7 +43,7 @@ public class EntryPoint extends Application {
 
 		/** title at the top */
 		HBox toppanel = new HBox(8);
-		Text gametitle = new Text("Conways Game of Life");
+		Text gametitle = new Text("Conways Game of Life is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input.");
 		gametitle.setId("gametitle");
 		toppanel.getChildren().add(gametitle);
 		rootpane.setTop(toppanel);
