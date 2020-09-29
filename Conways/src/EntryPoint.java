@@ -36,7 +36,11 @@ public class EntryPoint extends Application {
 		/** Make a button pane at the bottom */
 		VBox buttonpanel = new VBox(8); // HBox to set buttons horizontally
 		Button start = new Button("Start");
+		start.setFont(Font.font("Courier New", 10));
+		start.setStyle("-fx-background-color: 	#00FF00; ");
 		Button stop = new Button("Stop");
+		stop.setStyle("-fx-background-color: #FFB6C1; ");
+		stop.setFont(Font.font("Courier New", 10));
 		buttonpanel.getChildren().addAll(start, stop);
 		rootpane.setLeft(buttonpanel);
 		buttonpanel.setAlignment(Pos.TOP_CENTER);
