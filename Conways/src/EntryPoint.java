@@ -137,10 +137,7 @@ public class EntryPoint extends Application {
 		bottompanel.getChildren().add(sampletext);
 		bottompanel.setId("bottompanel");
 		root.setBottom(bottompanel);
-		
-		
-		
-		
+	
 
 		/** Styling everything with a css file */
 		root.getStylesheets().add("styling.css");
