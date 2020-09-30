@@ -40,6 +40,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -54,9 +55,7 @@ public class EntryPoint extends Application {
 	CellWorld cellWorld1 = new CellWorld(20, 10);
 	Cell[][] world = cellWorld1.getWorld();
 	Group group = new Group();
-
 	public void start(Stage primaryStage) throws Exception {
-
 		/** Main pane layout (BorderPane) */
 		BorderPane root = new BorderPane();
 		/** Styling everything with a css file */
@@ -84,6 +83,11 @@ public class EntryPoint extends Application {
 		ImageView windmillv = new ImageView(windmilli);
 		windmillv.setFitHeight(30);
 		windmillv.setFitWidth(30);
+		
+		Image gosperglide = new Image("GosperGliderGun.png");
+		ImageView gosperglidev = new ImageView(gosperglide);
+		gosperglidev.setFitHeight(30);
+		gosperglidev.setFitWidth(30);
 
 // ----------------------------------------------------------------------------- 	
 
@@ -120,9 +124,11 @@ public class EntryPoint extends Application {
 		pufferfish.setGraphic(pufferfishrakev);
 		Button windmill = new Button("Windmill");
 		windmill.setGraphic(windmillv);
+		Button gosperglider = new Button("Gosper Glider");
+		gosperglider.setGraphic(gosperglidev);
 		Text righttitle = new Text("Preset Games");
 		righttitle.setId("righttitle");
-		presetpanel.getChildren().addAll(righttitle, pulsar, rpentomino, pufferfish, windmill);
+		presetpanel.getChildren().addAll(righttitle, gosperglider, pulsar, rpentomino, pufferfish, windmill);
 
 // ----------------------------------------------------------------------------------- 
 		/** title at the top */
@@ -135,7 +141,7 @@ public class EntryPoint extends Application {
 		blend.setMode(BlendMode.MULTIPLY);
 		Text text = new Text();
 		toppanel.getChildren().add(text);
-		text.setText("Conways Game of Life");
+		text.setText("Conway's Game of Life");
 		text.setId("gametitle");
 		DropShadow d1 = new DropShadow();
 		d1.setColor(javafx.scene.paint.Color.LIGHTBLUE);
@@ -167,8 +173,9 @@ public class EntryPoint extends Application {
 		/** Bottom pane */
 		VBox bottompanel = new VBox();
 		Text sampletext = new Text(
-				"Conways Game of Life is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input.");
+				"--- Click to make your own pattern! ---\nConway's Game of Life is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input.");
 		sampletext.setId("sampletext");
+		sampletext.setTextAlignment(TextAlignment.CENTER);
 		bottompanel.setAlignment(Pos.CENTER);
 		bottompanel.getChildren().add(sampletext);
 		bottompanel.setId("bottompanel");
@@ -178,7 +185,7 @@ public class EntryPoint extends Application {
 
 		/** Making the gamepane and loading a game when application opens */
 		Pane gamepane = new Pane();
-		gamepane.getChildren().add(group);
+		gamepane.getChildren().addAll(group);
 		gamepane.setId("centerpane");
 		root.setCenter(group);
 		cellWorld1.tick();
@@ -237,7 +244,8 @@ public class EntryPoint extends Application {
 		});
 		/** clear button */
 		clear.setOnAction(e -> {
-
+			cellWorld1.deadWorld();
+			drawSquares();
 		});
 		/** pulsar button */
 		pulsar.setOnAction(e -> {

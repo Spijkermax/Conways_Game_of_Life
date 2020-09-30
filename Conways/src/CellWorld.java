@@ -33,6 +33,16 @@ public class CellWorld {
 			}
 		}
 	}
+	public void deadWorld() {
+		for (int j = 0; j < world.length; j++) {
+			for (int i = 0; i < world[j].length; i++) {
+				if (world[j][i].isAlive() == true) {
+					world[j][i].swapState();
+				}
+				
+			}
+		}
+	}
 
 	private void drawWorld() {
 		for (int j = 0; j < world.length; j++) {
