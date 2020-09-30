@@ -13,8 +13,6 @@
 
 #bottompanel {
 	-fx-background-color: #0080ff;
-	-fx-font: 20px Verdana;
-	-fx-font-style: italic;
 }
 
 #sidepanel {
@@ -38,6 +36,12 @@
 	-fx-font: 35px Impact;
 	-fx-fill: white;
 }
+#sampletext {
+-fx-font: 20px Verdana;
+-fx-font-style: italic;
+-fx-fill: white;
+}
+
 
 .button {
 	-fx-background-color: #c3c4c4, linear-gradient(#d6d6d6 50%, white 100%),

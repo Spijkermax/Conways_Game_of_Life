@@ -168,6 +168,7 @@ public class EntryPoint extends Application {
 		VBox bottompanel = new VBox();
 		Text sampletext = new Text(
 				"Conways Game of Life is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input.");
+		sampletext.setId("sampletext");
 		bottompanel.setAlignment(Pos.CENTER);
 		bottompanel.getChildren().add(sampletext);
 		bottompanel.setId("bottompanel");
@@ -186,6 +187,7 @@ public class EntryPoint extends Application {
 		/** preparing the scene */
 		Scene scene = new Scene(root, width, height);
 		primaryStage.setScene(scene);
+		primaryStage.setFullScreen(true);
 		primaryStage.show();
 
 //----------------------------------------------------------------------------------------
