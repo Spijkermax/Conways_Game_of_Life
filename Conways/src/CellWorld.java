@@ -25,10 +25,7 @@ public class CellWorld {
 		for (int j = 0; j < world.length; j++) {
 			for (int i = 0; i < world[j].length; i++) {
 				world[j][i] = new Cell(i, j);
-				Double d = Math.random();
-				if (d < 0.7) {
-					world[j][i].swapState();
-				}
+				
 			}
 		}
 	}
