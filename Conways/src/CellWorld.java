@@ -2,13 +2,14 @@
 public class CellWorld {
 	Cell[][] world;
 
-	//define the starting width(x) and height(y) for a new CellWorld making 2D array with those values 
+	// define the starting width(x) and height(y) for a new CellWorld making 2D
+	// array with those values
 	public CellWorld(int x, int y) {
 		world = new Cell[y][x];
 		createWorld();
 		drawWorld();
 	}
-	
+
 	public Cell[][] getWorld() {
 		return world;
 	}
@@ -17,10 +18,14 @@ public class CellWorld {
 		world[y][x].swapState();
 	}
 
+	public void setWorld(Cell[][] world) {
+		this.world = world;
+	}
+
 	private void createWorld() {
 		for (int j = 0; j < world.length; j++) {
 			for (int i = 0; i < world[j].length; i++) {
-				world[j][i] = new Cell(i,j);
+				world[j][i] = new Cell(i, j);
 				Double d = Math.random();
 				if (d < 0.7) {
 					world[j][i].swapState();
@@ -41,13 +46,14 @@ public class CellWorld {
 		System.out.println("-----------------------------------------------------------------------------------");
 		// System.out.println(" ");
 	}
-	
+
 	public Cell getCell(int x, int y) {
 		return world[y][x];
 	}
 
 	public void tick() {
-		// first iterate through every cell to see if it should swap or not but do not change living status
+		// first iterate through every cell to see if it should swap or not but do not
+		// change living status
 		// until we have finished iterating through the entire 2D array of cells
 		for (int j = 0; j < world.length; j++) {
 			for (int i = 0; i < world[j].length; i++) {
@@ -59,11 +65,11 @@ public class CellWorld {
 				world[j][i].update();
 			}
 		}
-		
+
 		checkBorders();
 		drawWorld();
 	}
-	
+
 //	public void checkNeighbours() {
 //		for (int j = 0; j < world.length; j++) {
 //			for (int i = 0; i < world[j].length; i++) {
@@ -72,10 +78,12 @@ public class CellWorld {
 //		}
 //	}
 
-	
-	// this method checks the topmost and bottommost row and the leftmost and rightmost column for
-	// presence of at least 1 LIVING cell, should there be one or more live cell(s) it will add an extra
-	// row/column such that the cellworld maintains atleast a 1cell thick border of dead/off cells.
+	// this method checks the topmost and bottommost row and the leftmost and
+	// rightmost column for
+	// presence of at least 1 LIVING cell, should there be one or more live cell(s)
+	// it will add an extra
+	// row/column such that the cellworld maintains atleast a 1cell thick border of
+	// dead/off cells.
 	public void checkBorders() {
 		if (shouldAddTop()) {
 			addTop();
@@ -120,6 +128,7 @@ public class CellWorld {
 		}
 		return false;
 	}
+
 	// method checks if any live cells in the rightmost column of cells
 	public boolean shouldAddRight() {
 		for (int j = 0; j < world.length; j++) {
@@ -134,99 +143,91 @@ public class CellWorld {
 	public void addTop() {
 		Cell[][] updatedWorld = new Cell[world.length + 1][world[0].length];
 
-			
 		// iterate though all cells of old world 2d array
 		for (int j = 0; j < world.length; j++) {
 			for (int i = 0; i < world[j].length; i++) {
-				//update the y value of old array cells y+=1
-				world[j][i].setY(world[j][i].getY()+1);
-				// the cell in updated world (with row+1) set to cell of old world 
-				// if j = 3, we are in 4th row of old world and since we added a row to the top for new world
+				// update the y value of old array cells y+=1
+				world[j][i].setY(world[j][i].getY() + 1);
+				// the cell in updated world (with row+1) set to cell of old world
+				// if j = 3, we are in 4th row of old world and since we added a row to the top
+				// for new world
 				// we want to use j+1 as that cell is now in the 5th row in the new world.
-				updatedWorld[j+1][i] = world[j][i];
+				updatedWorld[j + 1][i] = world[j][i];
 			}
 		}
-		
+
 		// this code adds new cells the the newly inserted row in the new 2d array
 		// not very efficient way to do it, could be improved
 		for (int j = 0; j < updatedWorld.length; j++) {
 			for (int i = 0; i < updatedWorld[j].length; i++) {
-				if(updatedWorld[j][i] == null) {
-					updatedWorld[j][i] = new Cell(i,j);
+				if (updatedWorld[j][i] == null) {
+					updatedWorld[j][i] = new Cell(i, j);
 				}
 			}
 		}
-		
+
 		world = updatedWorld;
 	}
-	
+
 	public void addBot() {
 		Cell[][] updatedWorld = new Cell[world.length + 1][world[0].length];
-		
-		
-		
+
 		for (int j = 0; j < world.length; j++) {
 			for (int i = 0; i < world[j].length; i++) {
 				updatedWorld[j][i] = world[j][i];
 			}
 		}
-		
+
 		for (int j = 0; j < updatedWorld.length; j++) {
 			for (int i = 0; i < updatedWorld[j].length; i++) {
-				if(updatedWorld[j][i] == null) {
-					updatedWorld[j][i] = new Cell(i,j);
+				if (updatedWorld[j][i] == null) {
+					updatedWorld[j][i] = new Cell(i, j);
 				}
 			}
 		}
-		
-		
-		
+
 		world = updatedWorld;
 	}
-	
+
 	public void addLeft() {
 		Cell[][] updatedWorld = new Cell[world.length][world[0].length + 1];
-		
-		
 
 		for (int j = 0; j < world.length; j++) {
 			for (int i = 0; i < world[j].length; i++) {
-				world[j][i].setX(world[j][i].getX()+1);
-				updatedWorld[j][i+1] = world[j][i];
+				world[j][i].setX(world[j][i].getX() + 1);
+				updatedWorld[j][i + 1] = world[j][i];
 			}
 		}
-		
+
 		for (int j = 0; j < updatedWorld.length; j++) {
 			for (int i = 0; i < updatedWorld[j].length; i++) {
-				if(updatedWorld[j][i] == null) {
-					updatedWorld[j][i] = new Cell(i,j);
+				if (updatedWorld[j][i] == null) {
+					updatedWorld[j][i] = new Cell(i, j);
 				}
 			}
 		}
-		
+
 		world = updatedWorld;
 	}
-	
+
 	public void addRight() {
 		Cell[][] updatedWorld = new Cell[world.length][world[0].length + 1];
-		
-		
 
 		for (int j = 0; j < world.length; j++) {
 			for (int i = 0; i < world[j].length; i++) {
 				updatedWorld[j][i] = world[j][i];
 			}
 		}
-		
+
 		for (int j = 0; j < updatedWorld.length; j++) {
 			for (int i = 0; i < updatedWorld[j].length; i++) {
-				if(updatedWorld[j][i] == null) {
-					updatedWorld[j][i] = new Cell(i,j);
+				if (updatedWorld[j][i] == null) {
+					updatedWorld[j][i] = new Cell(i, j);
 				}
 			}
 		}
-		
+
 		world = updatedWorld;
 	}
-	
+
 }

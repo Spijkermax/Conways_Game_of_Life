@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
@@ -22,6 +23,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -41,6 +43,8 @@ public class EntryPoint extends Application {
 
 	final int width = 800;
 	final int height = 800;
+	int rW;
+	int rH;
 
 	CellWorld cellWorld1 = new CellWorld(20, 10);
 	Cell[][] world = cellWorld1.getWorld();
@@ -50,7 +54,7 @@ public class EntryPoint extends Application {
 
 		/** Main pane layout (BorderPane) */
 		BorderPane root = new BorderPane();
-	//	Image image = new Image("download.jpg");
+		// Image image = new Image("download.jpg");
 
 		/** Make a button pane at the bottom */
 		VBox buttonpanel = new VBox(8); // HBox to set buttons horizontally
@@ -62,7 +66,7 @@ public class EntryPoint extends Application {
 		Button stop = new Button("Stop");
 		Button clear = new Button("Clear");
 		MenuButton add = new MenuButton("Presets");
-	//	buttonpanel.getChildren().addAll(new ImageView(image));
+		// buttonpanel.getChildren().addAll(new ImageView(image));
 		add.setId("addbutton");
 		add.getItems().addAll(new MenuItem("SpaceShip"), new MenuItem("Butterfly"));
 		buttonpanel.getChildren().addAll(start, stop, clear, add);
@@ -76,19 +80,17 @@ public class EntryPoint extends Application {
 		toppanel.setId("toppanel");
 		root.setTop(toppanel);
 		toppanel.setAlignment(Pos.CENTER);
-		
+
 		Blend blend = new Blend();
 		blend.setMode(BlendMode.MULTIPLY);
 		Text text = new Text();
-		//TextField textField = new TextField();
+		// TextField textField = new TextField();
 		toppanel.getChildren().add(text);
 		text.setText("Conways Game of Life");
 		text.setId("gametitle");
 		text.setFont(Font.font("Impact", 100));
-	//	text.textProperty().bind(text.textProperty());
-		
-		
-		
+		// text.textProperty().bind(text.textProperty());
+
 		DropShadow ds = new DropShadow();
 		ds.setColor(javafx.scene.paint.Color.LIGHTBLUE);
 		ds.setOffsetX(5);
@@ -137,26 +139,23 @@ public class EntryPoint extends Application {
 		bottompanel.getChildren().add(sampletext);
 		bottompanel.setId("bottompanel");
 		root.setBottom(bottompanel);
-	
 
 		/** Styling everything with a css file */
 		root.getStylesheets().add("styling.css");
 
 		BorderPane gamepane = new BorderPane();
 		gamepane.getChildren().add(group);
-		drawSquares();
 		root.setCenter(group);
+		cellWorld1.tick();
+		drawSquares();
 		Scene scene = new Scene(root, width, height);
-		root.prefHeightProperty().bind(scene.heightProperty());
-	    root.prefWidthProperty().bind(scene.widthProperty());
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
 		KeyFrame frame = new KeyFrame(Duration.millis(200), new EventHandler<ActionEvent>() {
 
-			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				cellWorld1.tick();
 				drawSquares();
 			}
 
@@ -167,6 +166,7 @@ public class EntryPoint extends Application {
 
 		/** Start button */
 		start.setOnAction(e -> {
+			cellWorld1.tick();
 			t.play();
 
 		});
@@ -177,9 +177,11 @@ public class EntryPoint extends Application {
 		});
 		/** Clear button */
 		clear.setOnAction(e -> {
+			t.stop();
+			group.getChildren().clear();
 
 		});
-
+		group.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> fillSquare(event.getX(), event.getY()));
 	}
 
 	public static void main(String[] args) {
@@ -189,11 +191,10 @@ public class EntryPoint extends Application {
 
 	public void drawSquares() {
 		group.getChildren().clear();
-		cellWorld1.tick();
 		world = cellWorld1.getWorld();
-		int rH = height / world.length;
+		rH = height / world.length;
 		for (int j = 0; j < world.length; j++) {
-			int rW = width / world[j].length;
+			rW = width / world[j].length;
 			for (int i = 0; i < world[j].length; i++) {
 				Rectangle r = new Rectangle();
 				r.setWidth(rW);
@@ -211,5 +212,23 @@ public class EntryPoint extends Application {
 
 		}
 
+	}
+
+	public void fillSquare(double x, double y) {
+
+//      world = cellWorld1.getWorld();
+//      rH = height/world.length;
+		for (Node n : group.getChildren()) {
+			if (x >= n.getTranslateX() && x < n.getTranslateX() + ((Rectangle) n).getWidth() && y >= n.getTranslateY()
+					&& y < n.getTranslateY() + ((Rectangle) n).getHeight()) {
+				double rx = n.getTranslateX();
+				double ry = n.getTranslateY();
+				double cx = (rx - 5) / rW;
+				double cy = (ry - 5) / rH;
+				world[(int) cy][(int) cx].swapState();
+				break;
+			}
+		}
+		drawSquares();
 	}
 }
