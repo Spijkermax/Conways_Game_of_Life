@@ -6,7 +6,7 @@ public class URLLoader {
 
 	int[][] holderArray;
 	int x, y;
-	String design;
+	String pattern;
 
 	
 	public URLLoader() {
@@ -14,17 +14,17 @@ public class URLLoader {
 		webLoader("frothingpuffer");
 	}
 	
-	public void webLoader(String d) {
+	public void webLoader(String p) {
 
 		/*
 		 * this method will bring in a design from a run length encoded file on the Internet and put it
 		 * in a 2D array to be placed in the world
 		 */
 		
-		design = d;
+		pattern = p;
 
 		try {
-			URL url = new URL("http://www.conwaylife.com/patterns/"+design+".rle");
+			URL url = new URL("http://www.conwaylife.com/patterns/"+pattern+".rle");
 			Scanner scanner = new Scanner(url.openStream());
 			
 			while (scanner.hasNext()) {
