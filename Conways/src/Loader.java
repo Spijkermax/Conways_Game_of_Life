@@ -1,3 +1,4 @@
+
 import java.net.URL;
 import java.io.File;
 import java.io.IOException;
@@ -12,10 +13,11 @@ public class Loader {
 	Scanner scanner;
 	int posx = 0;
 	int posy = 0;
+	CellWorld cw;
 
 	public Loader() {
-		webFileLoader("pufferfishbreeder", "web");
-//		webFileLoader("pulsar", "file");
+		//webFileLoader("pufferfishbreeder", "web");
+		webFileLoader("pulsar", "web");
 		
 	}
 
@@ -76,12 +78,8 @@ public class Loader {
 
 					}
 
-					holderArray = new boolean[y][x];
-					for (int i = 0; i < y; i++) {
-						for (int j = 0; j < x; j++) {
-							holderArray[i][j] = false;
-						}
-					}
+					cw = new CellWorld(x, y);
+					
 
 				}
 
@@ -101,7 +99,7 @@ public class Loader {
 							} else if ('o' == charry) {
 								/* o is alive cell */
 //								System.out.print("o");
-								holderArray[posy][posx] = true;
+								cw.getCell(posx, posy).swapState();
 								posx++;
 							} else if ('$' == charry) {
 								/* new row */
@@ -123,7 +121,7 @@ public class Loader {
 									/* alive cells */
 									for (int k = 0; k < num; k++) {
 //										System.out.print("o");
-										holderArray[posy][posx] = true;
+										cw.getCell(posx, posy).swapState();
 										posx++;
 									}
 								} else if ('$' == charry) {
@@ -148,10 +146,10 @@ public class Loader {
 			
 			System.out.print("From the array:\n");
 
-			for (int i = 0; i < holderArray.length; i++) {
-				for (int j = 0; j < holderArray[i].length; j++) {
+			for (int i = 0; i < cw.getWorld().length; i++) {
+				for (int j = 0; j < cw.getWorld()[i].length; j++) {
 					String sym;
-					if (holderArray[i][j] == true) {
+					if (cw.getWorld()[i][j].isAlive() == true) {
 						sym = "o";
 					} else {
 						sym = ".";
@@ -168,6 +166,10 @@ public class Loader {
 
 		}
 	}
+	
+	public CellWorld getCellWorld() {
+		return cw;
+	}
 
 	/* uncomment the main method to run standalone */
 	
@@ -177,3 +179,4 @@ public class Loader {
 //	}
 
 }
+
