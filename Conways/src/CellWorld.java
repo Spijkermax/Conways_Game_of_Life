@@ -51,15 +51,6 @@ public class CellWorld {
 		return world[y][x];
 	}
 
-	public void reset() {
-		for (int j = 0; j < world.length; j++) {
-			for (int i = 0; i < world[j].length; i++) {
-				world[j][i] = world[0][0];
-				
-			}
-		}
-	}
-
 	public void tick() {
 		// first iterate through every cell to see if it should swap or not but do not
 		// change living status
