@@ -25,7 +25,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -41,8 +46,8 @@ import javafx.util.Duration;
 
 public class EntryPoint extends Application {
 
-	final int width = 800;
-	final int height = 800;
+	final int width = 600;
+	final int height = 600;
 	int rW;
 	int rH;
 
@@ -54,27 +59,72 @@ public class EntryPoint extends Application {
 
 		/** Main pane layout (BorderPane) */
 		BorderPane root = new BorderPane();
-		// Image image = new Image("download.jpg");
+		/** Styling everything with a css file */
+		root.getStylesheets().add("styling.css");
 
-		/** Make a button pane at the bottom */
-		VBox buttonpanel = new VBox(8); // HBox to set buttons horizontally
-		buttonpanel.setPrefWidth(200);
+// ------------------------------------------------------------------------- 		
+
+		/** loading in images */
+		Image pulsari = new Image("pulsar.png");
+		ImageView pulsariv = new ImageView(pulsari);
+		pulsariv.setFitHeight(30);
+		pulsariv.setFitWidth(30);
+
+		Image rpentominoi = new Image("rpentomino.png");
+		ImageView rpentominov = new ImageView(rpentominoi);
+		rpentominov.setFitHeight(30);
+		rpentominov.setFitWidth(30);
+		
+		Image pufferfishrakei = new Image("Pufferfish.png");
+		ImageView pufferfishrakev = new ImageView(pufferfishrakei);
+		pufferfishrakev.setFitHeight(30);
+		pufferfishrakev.setFitWidth(30);
+		
+		Image windmilli = new Image("Windmill.png");
+		ImageView windmillv = new ImageView(windmilli);
+		windmillv.setFitHeight(30);
+		windmillv.setFitWidth(30);
+
+// ----------------------------------------------------------------------------- 	
+
+		/** Button pane on the left side */
+		VBox buttonpanel = new VBox(8);
 		buttonpanel.setId("sidepanel");
 		buttonpanel.setSpacing(20);
 		buttonpanel.setPadding(new Insets(20, 20, 20, 20));
+		buttonpanel.setAlignment(Pos.CENTER);
+		//buttons
 		Button start = new Button("Start");
 		Button stop = new Button("Stop");
 		Button reset = new Button("Reset");
-		MenuButton add = new MenuButton("Presets");
-		// buttonpanel.getChildren().addAll(new ImageView(image));
-		add.setId("addbutton");
-		add.getItems().addAll(new MenuItem("SpaceShip"), new MenuItem("Butterfly"));
-		buttonpanel.getChildren().addAll(start, stop, reset, add);
+		Button clear = new Button("Clear");
+		Text lefttitle = new Text("Controls");
+		lefttitle.setId("lefttitle");
 		root.setLeft(buttonpanel);
-		buttonpanel.setAlignment(Pos.CENTER);
-		HBox view = new HBox();
-		buttonpanel.getChildren().add(view);
+		buttonpanel.getChildren().addAll(lefttitle, start, stop, reset, clear);
+		
 
+		/** Button pane on the right side */
+		VBox presetpanel = new VBox(8);
+		presetpanel.setId("rightpanel");
+		presetpanel.setSpacing(20);
+		presetpanel.setPadding(new Insets(20, 20, 20, 20));
+		presetpanel.setAlignment(Pos.CENTER);
+		root.setRight(presetpanel);
+		//buttons
+		Button pulsar = new Button("Pulsar");
+		pulsar.setGraphic(pulsariv);
+		Button rpentomino = new Button("Pentomino");
+		rpentomino.setGraphic(rpentominov);
+		Button pufferfish = new Button("Pufferfish");
+		pufferfish.setGraphic(pufferfishrakev);
+		Button windmill = new Button("Windmill");
+		windmill.setGraphic(windmillv);
+		Text righttitle = new Text("Preset Games");
+		righttitle.setId("righttitle");
+		presetpanel.getChildren().addAll(righttitle, pulsar, rpentomino, pufferfish, windmill);
+
+// ----------------------------------------------------------------------------------- 
 		/** title at the top */
 		HBox toppanel = new HBox(8);
 		toppanel.setId("toppanel");
@@ -84,73 +134,63 @@ public class EntryPoint extends Application {
 		Blend blend = new Blend();
 		blend.setMode(BlendMode.MULTIPLY);
 		Text text = new Text();
-		// TextField textField = new TextField();
 		toppanel.getChildren().add(text);
 		text.setText("Conways Game of Life");
 		text.setId("gametitle");
-		text.setFont(Font.font("Impact", 100));
-		// text.textProperty().bind(text.textProperty());
-
-		DropShadow ds = new DropShadow();
-		ds.setColor(javafx.scene.paint.Color.LIGHTBLUE);
-		ds.setOffsetX(5);
-		ds.setOffsetY(5);
-		ds.setRadius(5);
-		ds.setSpread(0.2);
-
-		blend.setBottomInput(ds);
-
-		DropShadow ds1 = new DropShadow();
-		ds1.setColor(javafx.scene.paint.Color.LIGHTBLUE);
-		ds1.setRadius(20);
-		ds1.setSpread(0.2);
-
-		Blend blend2 = new Blend();
-		blend2.setMode(BlendMode.MULTIPLY);
-
-		InnerShadow is = new InnerShadow();
-		is.setColor(javafx.scene.paint.Color.LIGHTBLUE);
-		is.setRadius(9);
-		is.setChoke(0.8);
-		blend2.setBottomInput(is);
-
+		DropShadow d1 = new DropShadow();
+		d1.setColor(javafx.scene.paint.Color.LIGHTBLUE);
+		d1.setOffsetX(5);
+		d1.setOffsetY(5);
+		d1.setRadius(5);
+		d1.setSpread(0.2);
+		DropShadow d2 = new DropShadow();
+		d2.setColor(javafx.scene.paint.Color.LIGHTBLUE);
+		d2.setRadius(20);
+		d2.setSpread(0.2);
 		InnerShadow is1 = new InnerShadow();
 		is1.setColor(javafx.scene.paint.Color.LIGHTBLUE);
-		is1.setRadius(5);
-		is1.setChoke(0.4);
-		blend2.setTopInput(is1);
-
+		is1.setRadius(9);
+		is1.setChoke(0.8);
+		InnerShadow is2 = new InnerShadow();
+		is2.setColor(javafx.scene.paint.Color.LIGHTBLUE);
+		is2.setRadius(5);
+		is2.setChoke(0.4);
 		Blend blend1 = new Blend();
 		blend1.setMode(BlendMode.MULTIPLY);
-		blend1.setBottomInput(ds1);
-		blend1.setTopInput(blend2);
-
+		blend1.setBottomInput(d1);
+		blend1.setTopInput(d2);
 		blend.setTopInput(blend1);
-
 		text.setEffect(blend);
 
-		/**
-		 * Descriptive box at the bottom (could add game descriptions, cell counter (how
-		 * many are alive)
-		 */
-		HBox bottompanel = new HBox();
+// ------------------------------------------------------------------------------ 
+
+		/** Bottom pane */
+		VBox bottompanel = new VBox();
 		Text sampletext = new Text(
 				"Conways Game of Life is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input.");
+		bottompanel.setAlignment(Pos.CENTER);
 		bottompanel.getChildren().add(sampletext);
 		bottompanel.setId("bottompanel");
 		root.setBottom(bottompanel);
 
-		/** Styling everything with a css file */
-		root.getStylesheets().add("styling.css");
+//------------------------------------------------------------------------------------------
 
-		BorderPane gamepane = new BorderPane();
+		/** Making the gamepane and loading a game when application opens */
+		Pane gamepane = new Pane();
 		gamepane.getChildren().add(group);
+		gamepane.setId("centerpane");
 		root.setCenter(group);
 		cellWorld1.tick();
 		drawSquares();
+
+		/** preparing the scene */
 		Scene scene = new Scene(root, width, height);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+
+//----------------------------------------------------------------------------------------
+
+		/** setting up Timeline and frames to animate each tick of game */
 
 		KeyFrame frame = new KeyFrame(Duration.millis(200), new EventHandler<ActionEvent>() {
 
@@ -163,6 +203,10 @@ public class EntryPoint extends Application {
 
 		Timeline t = new Timeline(frame);
 		t.setCycleCount(javafx.animation.Animation.INDEFINITE);
+
+//--------------------------------------------------------------------------------------
+
+		/** Binding buttons with actions */
 
 		/** Start button */
 		start.setOnAction(e -> {
@@ -178,17 +222,39 @@ public class EntryPoint extends Application {
 			t.stop();
 
 		});
-		/** Clear button */
+		/** reset button */
 		reset.setOnAction(e -> {
-			group.getChildren().clear(); //Clear the pane
+			group.getChildren().clear(); // Clear the pane
 			CellWorld cellWorld2 = new CellWorld(20, 10);
-			Cell[][]newworld = cellWorld2.getWorld();
+			Cell[][] newworld = cellWorld2.getWorld();
 			cellWorld1.setWorld(newworld);
 			cellWorld1.tick();
 			drawSquares();
 			t.stop();
 			// Clear the array of the world
 		});
+		/** clear button */
+		clear.setOnAction(e -> {
+
+		});
+		/** pulsar button */
+		pulsar.setOnAction(e -> {
+			
+		});
+		/** pufferfish button */
+		pufferfish.setOnAction(e -> {
+			
+		});
+		/**r-pentomino button */
+		rpentomino.setOnAction(e -> {
+			
+		});
+		/** windmill button */
+		windmill.setOnAction(e -> {
+			
+			
+		});
+
 		group.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> fillSquare(event.getX(), event.getY()));
 	}
 
@@ -196,7 +262,9 @@ public class EntryPoint extends Application {
 		launch(args);
 
 	}
-
+// --------------------------------------------------------------------------------------------------------
+	/** Methods */
+	
 	public void drawSquares() {
 		group.getChildren().clear();
 		world = cellWorld1.getWorld();
@@ -215,6 +283,7 @@ public class EntryPoint extends Application {
 					r.setFill(javafx.scene.paint.Color.LIGHTBLUE);
 				}
 				group.getChildren().add(r);
+				group.setId("gamecontents");
 
 			}
 
