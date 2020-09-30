@@ -1,4 +1,3 @@
-
 public class CellWorld {
 	Cell[][] world;
 
@@ -62,6 +61,7 @@ public class CellWorld {
 	}
 
 	public void tick() {
+		checkBorders();
 		// first iterate through every cell to see if it should swap or not but do not
 		// change living status
 		// until we have finished iterating through the entire 2D array of cells
