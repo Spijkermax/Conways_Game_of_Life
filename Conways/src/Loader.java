@@ -1,4 +1,3 @@
-
 import java.net.URL;
 import java.io.File;
 import java.io.IOException;
@@ -15,9 +14,10 @@ public class Loader {
 	int posy = 0;
 	CellWorld cw;
 
-	public Loader() {
+	public Loader(String p, String t) {
 		//webFileLoader("pufferfishbreeder", "web");
-		webFileLoader("pulsar", "web");
+		//webFileLoader("pulsar", "web");
+		webFileLoader("p", "t");
 		
 	}
 
