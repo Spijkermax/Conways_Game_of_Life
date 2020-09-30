@@ -135,7 +135,7 @@ public class EntryPoint extends Application {
 		blend.setMode(BlendMode.MULTIPLY);
 		Text text = new Text();
 		toppanel.getChildren().add(text);
-		text.setText("Conways Game of Life");
+		text.setText("Conway's Game of Life");
 		text.setId("gametitle");
 		DropShadow d1 = new DropShadow();
 		d1.setColor(javafx.scene.paint.Color.LIGHTBLUE);
@@ -167,7 +167,7 @@ public class EntryPoint extends Application {
 		/** Bottom pane */
 		VBox bottompanel = new VBox();
 		Text sampletext = new Text(
-				"Conways Game of Life is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input.");
+				"Conway's Game of Life is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input.");
 		bottompanel.setAlignment(Pos.CENTER);
 		bottompanel.getChildren().add(sampletext);
 		bottompanel.setId("bottompanel");
