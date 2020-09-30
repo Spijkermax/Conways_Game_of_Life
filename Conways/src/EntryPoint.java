@@ -64,12 +64,12 @@ public class EntryPoint extends Application {
 		buttonpanel.setPadding(new Insets(20, 20, 20, 20));
 		Button start = new Button("Start");
 		Button stop = new Button("Stop");
-		Button clear = new Button("Clear");
+		Button reset = new Button("Reset");
 		MenuButton add = new MenuButton("Presets");
 		// buttonpanel.getChildren().addAll(new ImageView(image));
 		add.setId("addbutton");
 		add.getItems().addAll(new MenuItem("SpaceShip"), new MenuItem("Butterfly"));
-		buttonpanel.getChildren().addAll(start, stop, clear, add);
+		buttonpanel.getChildren().addAll(start, stop, reset, add);
 		root.setLeft(buttonpanel);
 		buttonpanel.setAlignment(Pos.CENTER);
 		HBox view = new HBox();
@@ -166,7 +166,10 @@ public class EntryPoint extends Application {
 
 		/** Start button */
 		start.setOnAction(e -> {
+			cellWorld1.setWorld(world);
+
 			cellWorld1.tick();
+
 			t.play();
 
 		});
@@ -176,10 +179,15 @@ public class EntryPoint extends Application {
 
 		});
 		/** Clear button */
-		clear.setOnAction(e -> {
+		reset.setOnAction(e -> {
+			group.getChildren().clear(); //Clear the pane
+			CellWorld cellWorld2 = new CellWorld(20, 10);
+			Cell[][]newworld = cellWorld2.getWorld();
+			cellWorld1.setWorld(newworld);
+			cellWorld1.tick();
+			drawSquares();
 			t.stop();
-			group.getChildren().clear();
-
+			// Clear the array of the world
 		});
 		group.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> fillSquare(event.getX(), event.getY()));
 	}
