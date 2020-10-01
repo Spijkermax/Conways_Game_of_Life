@@ -51,8 +51,9 @@ public class EntryPoint extends Application {
 	final int height = 600;
 	int rW;
 	int rH;
-
+	
 	CellWorld cellWorld1 = new CellWorld(20, 10);
+
 	Cell[][] world = cellWorld1.getWorld();
 	Group group = new Group();
 	public void start(Stage primaryStage) throws Exception {
@@ -100,12 +101,12 @@ public class EntryPoint extends Application {
 		//buttons
 		Button start = new Button("Start");
 		Button stop = new Button("Stop");
-		Button reset = new Button("Reset");
+		Button randomise = new Button("Randomise");
 		Button clear = new Button("Clear");
 		Text lefttitle = new Text("Controls");
 		lefttitle.setId("lefttitle");
 		root.setLeft(buttonpanel);
-		buttonpanel.getChildren().addAll(lefttitle, start, stop, reset, clear);
+		buttonpanel.getChildren().addAll(lefttitle, start, stop, randomise, clear);
 		
 
 		/** Button pane on the right side */
@@ -220,7 +221,6 @@ public class EntryPoint extends Application {
 		/** Start button */
 		start.setOnAction(e -> {
 			cellWorld1.setWorld(world);
-
 			cellWorld1.tick();
 
 			t.play();
@@ -232,9 +232,10 @@ public class EntryPoint extends Application {
 
 		});
 		/** reset button */
-		reset.setOnAction(e -> {
+		randomise.setOnAction(e -> {
 			group.getChildren().clear(); // Clear the pane
 			CellWorld cellWorld2 = new CellWorld(20, 10);
+			cellWorld2.randomiseWorld();
 			Cell[][] newworld = cellWorld2.getWorld();
 			cellWorld1.setWorld(newworld);
 			cellWorld1.tick();
@@ -246,22 +247,48 @@ public class EntryPoint extends Application {
 		clear.setOnAction(e -> {
 			cellWorld1.deadWorld();
 			drawSquares();
+			t.stop();
 		});
+		/** Gosper glider button */
+		
+		
+		
 		/** pulsar button */
 		pulsar.setOnAction(e -> {
-			
+		Loader pulsarl = new Loader("pulsar", "web");
+		cellWorld1 = pulsarl.getCellWorld();
+		world = cellWorld1.getWorld();
+		cellWorld1.tick();
+		drawSquares();
+		t.stop();
 		});
 		/** pufferfish button */
-		pufferfish.setOnAction(e -> {
-			
+		pufferfish.setOnAction(e -> {	
+		Loader pufferfishl = new Loader("pufferfishrake", "web");
+		cellWorld1 = pufferfishl.getCellWorld();
+		world = cellWorld1.getWorld();
+		cellWorld1.tick();
+		drawSquares();
+		t.stop();
 		});
 		/**r-pentomino button */
 		rpentomino.setOnAction(e -> {
+		Loader rpentominol = new Loader("rpentomino", "web");
+		cellWorld1 = rpentominol.getCellWorld();
+		world = cellWorld1.getWorld();
+		cellWorld1.tick();
+		drawSquares();
+		t.stop();
 			
 		});
 		/** windmill button */
 		windmill.setOnAction(e -> {
-			
+			Loader windmilll = new Loader("windmill", "web");
+			cellWorld1 = windmilll.getCellWorld();
+			world = cellWorld1.getWorld();
+			cellWorld1.tick();
+			drawSquares();
+			t.stop();
 			
 		});
 

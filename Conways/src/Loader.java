@@ -17,7 +17,7 @@ public class Loader {
 	public Loader(String p, String t) {
 		//webFileLoader("pufferfishbreeder", "web");
 		//webFileLoader("pulsar", "web");
-		webFileLoader("p", "t");
+		webFileLoader(p, t);
 		
 	}
 
@@ -94,16 +94,16 @@ public class Loader {
 
 							if ('b' == charry) {
 								/* b is a dead cell */
-//								System.out.print(".");
+								System.out.print(".");
 								posx++;
 							} else if ('o' == charry) {
 								/* o is alive cell */
-//								System.out.print("o");
+								System.out.print("o");
 								cw.getCell(posx, posy).swapState();
 								posx++;
 							} else if ('$' == charry) {
 								/* new row */
-//								System.out.print("\n");
+								System.out.print("\n");
 								posx = 0;
 								posy++;
 							} else if (Character.isDigit(charry)) {
@@ -114,20 +114,20 @@ public class Loader {
 								if ('b' == charry) {
 									/* dead cells */
 									for (int k = 0; k < num; k++) {
-//										System.out.print(".");
+										System.out.print(".");
 										posx++;
 									}
 								} else if ('o' == charry) {
 									/* alive cells */
 									for (int k = 0; k < num; k++) {
-//										System.out.print("o");
+										System.out.print("o");
 										cw.getCell(posx, posy).swapState();
 										posx++;
 									}
 								} else if ('$' == charry) {
 									/* new row */
 									for (int k = 0; k < num; k++) {
-//										System.out.print("\n");
+										System.out.print("\n");
 										posx = 0;
 										posy++;
 									}
